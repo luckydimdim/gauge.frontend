@@ -41,7 +41,6 @@ class PointerOptions {
 class GaugeOptions {
 
 
-
   /*
   * The span of the gauge arc
   */
@@ -140,12 +139,12 @@ class Gauge {
   dynamic context;
   GaugeOptions options;
 
-  Gauge(this._resourcesLoader, this.context, this.options)  {
+  Gauge(this._resourcesLoader, this.context, this.options) {
 
 
   }
 
-  Init() async {
+  Future<bool> Init() async {
 
     await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
 
