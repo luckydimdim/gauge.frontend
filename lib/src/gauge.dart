@@ -133,6 +133,84 @@ class _Gauge {
   external set(int value);
 }
 
+@JS('Donut')
+class _Donut {
+  /*
+  * max gauge value
+  */
+  external int get maxValue;
+
+  external set maxValue(int v);
+
+  /*
+  * animation speed (32 is default value)
+  */
+  external int get animationSpeed;
+
+  external set animationSpeed(int v);
+
+  external factory _Donut(String target);
+
+  external setOptions(GaugeOptions options);
+
+  /*
+  * actual value
+  * */
+  external set(int value);
+}
+
+
+class Donut {
+  ResourcesLoaderService _resourcesLoader;
+  _Donut _donut;
+  dynamic context;
+  GaugeOptions options;
+
+  Donut(this._resourcesLoader, this.context, this.options) {
+
+
+  }
+
+  Future<bool> Init() async {
+
+    bool success = await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
+
+    if (!success)
+      return false;
+
+    print('script loaded!');
+    _donut = new _Donut(context).setOptions(options);
+
+    return true;
+
+  }
+
+  /*
+  * max gauge value
+  */
+  int get maxValue => _donut.maxValue;
+
+  void set maxValue(int v) {
+    _donut.maxValue = v;
+  }
+
+  /*
+  * animation speed (32 is default value)
+  */
+  int get animationSpeed => _donut.animationSpeed;
+
+  void set animationSpeed(int v) {
+    _donut.animationSpeed = v;
+  }
+
+  /*
+  * actual value
+  * */
+  void set(int value) {
+    _donut.set(value);
+  }
+}
+
 class Gauge {
   ResourcesLoaderService _resourcesLoader;
   _Gauge _gauge;
@@ -146,9 +224,16 @@ class Gauge {
 
   Future<bool> Init() async {
 
-    await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
+    bool success = await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
 
+    if (!success)
+      return false;
+
+    print('script loaded!');
     _gauge = new _Gauge(context).setOptions(options);
+
+    return true;
+
   }
 
   /*
