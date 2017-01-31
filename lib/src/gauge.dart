@@ -229,7 +229,6 @@ class Gauge {
     if (!success)
       return false;
 
-    print('script loaded!');
     _gauge = new _Gauge(context).setOptions(options);
 
     return true;
