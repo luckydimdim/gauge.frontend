@@ -178,7 +178,6 @@ class Donut {
     if (!success)
       return false;
 
-    print('script loaded!');
     _donut = new _Donut(context).setOptions(options);
 
     return true;
