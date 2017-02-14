@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:core';
 import 'dart:html';
 import 'package:angular2/platform/browser.dart';
@@ -19,12 +18,12 @@ bool get isDebug =>
 @View(
   template: '''
     <master-layout>
-      <drp></drp>
+      <gaaaauge></gaaaauge>
     </master-layout>''',
   directives: const [MasterLayoutComponent, GaugeComponent])
 class AppComponent {}
 
-@Component(selector: 'gauge')
+@Component(selector: 'gaaaauge')
 @View(
   template: '<canvas id="gauge"></canvas>')
 class GaugeComponent implements AfterViewInit {
