@@ -173,7 +173,7 @@ class Donut {
 
   Future<bool> Init() async {
 
-    bool success = await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
+    bool success = await _resourcesLoader.loadScriptAsync('packages/gauge/src/bower_components/gauge.js/dist/', 'gauge.js', false);
 
     if (!success)
       return false;
@@ -223,7 +223,7 @@ class Gauge {
 
   Future<bool> Init() async {
 
-    bool success = await _resourcesLoader.loadScriptAsync('vendor/gauge.js/dist/', 'gauge.js', false);
+    bool success = await _resourcesLoader.loadScriptAsync('packages/gauge/src/bower_components/gauge.js/dist/', 'gauge.js', false);
 
     if (!success)
       return false;
