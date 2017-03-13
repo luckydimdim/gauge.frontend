@@ -1,11 +1,7 @@
 @JS()
 library gauge;
 
-import 'dart:async';
 import 'package:js/js.dart';
-import 'dart:html';
-import 'dart:js_util';
-import 'package:resources_loader/resources_loader.dart';
 
 @anonymous
 @JS()
@@ -116,7 +112,7 @@ class GaugeOptions {
 }
 
 @JS('Gauge')
-abstract class _Gauge {
+abstract class GaugeStatic {
 
   /*
   * max gauge value
@@ -132,18 +128,24 @@ abstract class _Gauge {
 
   external set animationSpeed(int v);
 
-  external factory _Gauge(String target);
+  external factory GaugeStatic(dynamic target);
 
-  external setOptions(GaugeOptions options);
+  external dynamic setOptions([GaugeOptions options]);
 
   /*
   * actual value
   * */
   external set(int value);
 }
+
+@JS()
+external GaugeStatic get Gauge;
+@JS()
+external set Gauge(GaugeStatic v);
+
 
 @JS('Donut')
-class _Donut {
+class DonutStatic {
   /*
   * max gauge value
   */
@@ -158,9 +160,9 @@ class _Donut {
 
   external set animationSpeed(int v);
 
-  external factory _Donut(String target);
+  external factory DonutStatic(dynamic target);
 
-  external setOptions(GaugeOptions options);
+  external dynamic setOptions([GaugeOptions options]);
 
   /*
   * actual value
@@ -168,97 +170,7 @@ class _Donut {
   external set(int value);
 }
 
-
-class Donut {
-  ResourcesLoaderService _resourcesLoader;
-  dynamic _donut;
-  dynamic context;
-  GaugeOptions options;
-
-  Donut(this._resourcesLoader, this.context, this.options) {
-
-
-  }
-
-  Future<bool> Init() async {
-
-    _donut = new _Donut(context);
-
-    callMethod(_donut, 'setOptions', [options]);
-
-    return true;
-
-  }
-
-  /*
-  * max gauge value
-  */
-  int get maxValue => _donut.maxValue;
-
-  void set maxValue(int v) {
-    _donut.maxValue = v;
-  }
-
-  /*
-  * animation speed (32 is default value)
-  */
-  int get animationSpeed => _donut.animationSpeed;
-
-  void set animationSpeed(int v) {
-    _donut.animationSpeed = v;
-  }
-
-  /*
-  * actual value
-  * */
-  void set(int value) {
-    _donut.set(value);
-  }
-}
-
-class Gauge {
-  ResourcesLoaderService _resourcesLoader;
-  dynamic _gauge;
-  dynamic context;
-  GaugeOptions options;
-
-  Gauge(this._resourcesLoader, this.context, this.options) {
-
-
-  }
-
-  Future<bool> Init() async {
-
-    _gauge = new _Gauge(context);
-
-    callMethod(_gauge, 'setOptions', [options]);
-
-    return true;
-
-  }
-
-  /*
-  * max gauge value
-  */
-  int get maxValue => _gauge.maxValue;
-
-  void set maxValue(int v) {
-    _gauge.maxValue = v;
-  }
-
-  /*
-  * animation speed (32 is default value)
-  */
-  int get animationSpeed => _gauge.animationSpeed;
-
-  void set animationSpeed(int v) {
-    _gauge.animationSpeed = v;
-  }
-
-  /*
-  * actual value
-  * */
-  void set(int value) {
-    _gauge.set(value);
-  }
-}
+@JS()
+external DonutStatic get Donut;
+@JS()
+external set Donut(DonutStatic v);

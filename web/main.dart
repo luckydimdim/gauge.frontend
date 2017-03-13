@@ -26,16 +26,18 @@ class AppComponent {}
 
 @Component(selector: 'gaaaauge')
 @View(
-  template: '<canvas id="gauge"></canvas>')
+  template: '<canvas id="gauge"></canvas><canvas id="gauge2"></canvas>')
 class GaugeComponent implements AfterViewInit {
   @override
   ngAfterViewInit() async {
+    createGauge(querySelector('#gauge') as CanvasElement, 2000);
+    createGauge(querySelector('#gauge2') as CanvasElement, 1000);
+  }
+
+  void createGauge(CanvasElement elem, int val) {
     var grayDark = '#2a2c36';
     var brandInfo = '#63c2de';
     var grayLighter = '#d1d4d7';
-
-
-    ResourcesLoaderService resourcesLoader = new ResourcesLoaderService();
 
     var options = new GaugeOptions()
       ..angle = 0.15
@@ -47,13 +49,12 @@ class GaugeComponent implements AfterViewInit {
       ..strokeColor = grayLighter
       ..generateGradient = true;
 
-    var gauge = new Gauge(resourcesLoader, querySelector('#gauge') as CanvasElement, options);
-
-    var success = await gauge.Init();
+    var gauge = new GaugeStatic(elem);
+    gauge.setOptions(options);
 
     gauge.maxValue = 3000; // set max gauge value
     gauge.animationSpeed = 32; // set animation speed (32 is default value)
-    gauge.set(2000); // set actual value
+    gauge.set(val); // set actual value
   }
 }
 
