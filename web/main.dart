@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:html';
+import 'package:alert/alert_service.dart';
 import 'package:angular2/platform/browser.dart';
 import 'package:angular2/core.dart';
 import 'package:angular2/src/core/reflection/reflection.dart';
@@ -29,9 +30,10 @@ class AppComponent {}
 class GaugeComponent implements AfterViewInit {
   @override
   ngAfterViewInit() async {
-    var grayDark =      '#2a2c36';
-    var brandInfo =     '#63c2de';
-    var grayLighter =   '#d1d4d7';
+    var grayDark = '#2a2c36';
+    var brandInfo = '#63c2de';
+    var grayLighter = '#d1d4d7';
+
 
     ResourcesLoaderService resourcesLoader = new ResourcesLoaderService();
 
@@ -47,7 +49,7 @@ class GaugeComponent implements AfterViewInit {
 
     var gauge = new Gauge(resourcesLoader, querySelector('#gauge') as CanvasElement, options);
 
-    await gauge.Init();
+    var success = await gauge.Init();
 
     gauge.maxValue = 3000; // set max gauge value
     gauge.animationSpeed = 32; // set animation speed (32 is default value)
@@ -63,7 +65,9 @@ main() async {
   ComponentRef ref = await bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
     const Provider(LocationStrategy, useClass: HashLocationStrategy),
-    const Provider(ResourcesLoaderService)]);
+    const Provider(ResourcesLoaderService),
+    const Provider(AlertService)
+  ]);
 
   if (isDebug) {
     print('Application in DebugMode');

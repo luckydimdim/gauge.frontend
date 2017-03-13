@@ -4,7 +4,7 @@ library gauge;
 import 'dart:async';
 import 'package:js/js.dart';
 import 'dart:html';
-import 'dart:js';
+import 'dart:js_util';
 import 'package:resources_loader/resources_loader.dart';
 
 @anonymous
@@ -104,10 +104,19 @@ class GaugeOptions {
 
   external set highDpiSupport(bool v);
 
+  external factory GaugeOptions({double  angle,
+    double  lineWidth,
+    PointerOptions  pointer,
+    bool  limitMax,
+    String  colorStart,
+    String  colorStop,
+    String  strokeColor,
+    bool  generateGradient,
+    bool  highDpiSupport});
 }
 
 @JS('Gauge')
-class _Gauge {
+abstract class _Gauge {
 
   /*
   * max gauge value
@@ -162,7 +171,7 @@ class _Donut {
 
 class Donut {
   ResourcesLoaderService _resourcesLoader;
-  _Donut _donut;
+  dynamic _donut;
   dynamic context;
   GaugeOptions options;
 
@@ -173,12 +182,9 @@ class Donut {
 
   Future<bool> Init() async {
 
-    bool success = await _resourcesLoader.loadScriptAsync('packages/gauge/src/bower_components/gauge.js/dist/', 'gauge.js', false);
+    _donut = new _Donut(context);
 
-    if (!success)
-      return false;
-
-    _donut = new _Donut(context).setOptions(options);
+    callMethod(_donut, 'setOptions', [options]);
 
     return true;
 
@@ -212,7 +218,7 @@ class Donut {
 
 class Gauge {
   ResourcesLoaderService _resourcesLoader;
-  _Gauge _gauge;
+  dynamic _gauge;
   dynamic context;
   GaugeOptions options;
 
@@ -223,12 +229,9 @@ class Gauge {
 
   Future<bool> Init() async {
 
-    bool success = await _resourcesLoader.loadScriptAsync('packages/gauge/src/bower_components/gauge.js/dist/', 'gauge.js', false);
+    _gauge = new _Gauge(context);
 
-    if (!success)
-      return false;
-
-    _gauge = new _Gauge(context).setOptions(options);
+    callMethod(_gauge, 'setOptions', [options]);
 
     return true;
 
